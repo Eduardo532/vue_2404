@@ -1,29 +1,29 @@
 <template>
     <div id="conteiner">
 
-        <form action="">
+        <div>
             
             <div id="form">
                 <label for="nombre">Nombre: </label>
-                <input type="text" v-model="nombre">
+                <input v-model="first">
             </div>
             <div id ="form">
                 <label for="apellido">Apellido </label>
-                <input type="text" name="apellido" id="apellido">
+                <input v-model ="last">
             </div>
             <div id ="form">
                 <button @click="">Enviar</button>
                 <button type="reset">Limpiar</button>
             </div>
-        </form>
+        </div>
 
-
-    <div>
+        <select size="5" v-model="selecionado">
+            <option v-for="name in filteredNames":key=name>{{ name }}</option>
+        </select>
         
-    </div>
 
-        
     </div>
+        
 </template>
 
 <script>
@@ -37,6 +37,12 @@ const nombres = ref(['Jane Doe'])
   const prefijo = ref('')
   const first = ref('')
   const last = ref('')
+
+  const filteredNames = computed(() =>
+  nombres.filter((n) =>
+    n.toLowerCase().startsWith(prefijo.value.toLowerCase())
+  )
+)
 
   watch(selecionado,(name)=>{
     ;[last.value,first.value]=name.split(' ')
@@ -59,10 +65,17 @@ const nombres = ref(['Jane Doe'])
     }
   }
 
-  
+  function eliminar(){
+    if (selecionado.value){
+        const i = nombres.indexOf(selecionado.value)
+        nombres.splice(i,1)
+        selecionado.value = first.value = last.value = ''
+    }
+  }
 
-
-
+  function hasValidInput(){
+    return first.value.trim()&& last.value.trim()
+  }
 </script>
 
 
