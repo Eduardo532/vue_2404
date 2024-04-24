@@ -12,8 +12,7 @@
                 <input v-model ="last">
             </div>
             <div id ="form">
-                <button @click="">Enviar</button>
-                <button type="reset">Limpiar</button>
+                
             </div>
         </div>
 
